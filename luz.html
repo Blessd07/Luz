@@ -1,0 +1,477 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, user-scalable=yes">
+    <title>Para Luz • La Lucecita De Mi Vida 💖</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --bg1: #fef0f7;
+            --bg2: #ffe4f0;
+            --card: #ffffffdd;
+            --accent-1: #e86bae;
+            --accent-2: #f7a1c4;
+            --accent-3: #ffe2f0;
+            --stem1: #4caf50;
+            --stem2: #1e6b2f;
+        }
+
+        body {
+            min-height: 100vh;
+            background: linear-gradient(145deg, var(--bg1), var(--bg2));
+            font-family: 'Segoe UI', 'Roboto', system-ui, -apple-system, 'Helvetica Neue', sans-serif;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+        }
+
+        .card {
+            max-width: 1100px;
+            width: 100%;
+            background: rgba(255, 255, 255, 0.92);
+            backdrop-filter: blur(2px);
+            border-radius: 48px 32px 56px 32px;
+            box-shadow: 0 12px 32px rgba(0, 0, 0, 0.08);
+            padding: 28px 32px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 32px;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .mensaje {
+            flex: 1.2;
+            min-width: 240px;
+        }
+
+        .mensaje h1 {
+            font-size: 2rem;
+            font-weight: 700;
+            background: linear-gradient(135deg, #c2185b, #ec6ea6);
+            background-clip: text;
+            -webkit-background-clip: text;
+            color: transparent;
+            margin-bottom: 12px;
+        }
+
+        .mensaje p {
+            font-size: 1.16rem;
+            line-height: 1.5;
+            color: #2c1a2b;
+            background: #fff0f5aa;
+            padding: 16px 20px;
+            border-radius: 28px;
+            margin: 16px 0 24px 0;
+            font-weight: 500;
+        }
+
+        .botones {
+            display: flex;
+            gap: 16px;
+            flex-wrap: wrap;
+        }
+
+        .btn {
+            border: none;
+            padding: 12px 26px;
+            font-weight: 700;
+            font-size: 1rem;
+            border-radius: 60px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            font-family: inherit;
+        }
+
+        .btn-primary {
+            background: #e84393;
+            color: white;
+            box-shadow: 0 6px 14px rgba(194, 24, 91, 0.2);
+        }
+
+        .btn-primary:hover {
+            background: #c2185b;
+            transform: scale(0.97);
+        }
+
+        .btn-secondary {
+            background: #ffffffcc;
+            color: #a13e6b;
+            border: 1px solid #ffb7d2;
+        }
+
+        .btn-secondary:hover {
+            background: #ffeef4;
+        }
+
+        .jardin {
+            flex: 1;
+            min-width: 320px;
+            position: relative;
+            display: flex;
+            justify-content: center;
+        }
+
+        .escena {
+            position: relative;
+            width: 100%;
+            max-width: 560px;
+            aspect-ratio: 1 / 1;
+            margin: 0 auto;
+        }
+
+        /* Capas */
+        .stem-layer, .flower-layer {
+            position: absolute;
+            inset: 0;
+        }
+        .flower-layer { z-index: 2; }
+        .stem-layer { z-index: 1; }
+
+        /* Wrappers de flores y tallos */
+        .flor-wrap, .stem-wrap {
+            position: absolute;
+            width: 320px;
+            height: 420px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            top: var(--top, 55%);
+            left: var(--left, 50%);
+            transform: translate(-50%, -50%) scale(var(--scale, 1));
+        }
+
+        /* Posiciones del ramo */
+        .pos-center     { --top: 55%; --left: 50%; --scale: 1; }
+        .pos-left       { --top: 64%; --left: 22%; --scale: 0.68; }
+        .pos-right      { --top: 64%; --left: 78%; --scale: 0.68; }
+        .pos-top        { --top: 28%; --left: 52%; --scale: 0.78; }
+        .pos-top-left   { --top: 22%; --left: 32%; --scale: 0.62; }
+        .pos-top-right  { --top: 22%; --left: 72%; --scale: 0.62; }
+        .pos-mid-left   { --top: 46%; --left: 18%; --scale: 0.64; }
+        .pos-mid-right  { --top: 46%; --left: 82%; --scale: 0.64; }
+        .pos-bottom-left{ --top: 82%; --left: 30%; --scale: 0.66; }
+        .pos-bottom-right{--top: 82%; --left: 70%; --scale: 0.66; }
+        .pos-top-center { --top: 14%; --left: 50%; --scale: 0.54; }
+        .pos-bottom-center{--top: 92%; --left: 50%; --scale: 0.54; }
+
+        /* Flor */
+        .flor {
+            position: relative;
+            width: 260px;
+            height: 260px;
+            z-index: 2;
+        }
+
+        /* Pétalo */
+        .petalo {
+            position: absolute;
+            left: 119px;
+            top: 16px;
+            transform-origin: center 120px;
+        }
+        .petalo-inner {
+            width: 22px;
+            height: 120px;
+            background: linear-gradient(to top, var(--accent-1), var(--accent-2), var(--accent-3));
+            border-radius: 60px;
+            box-shadow: 0 6px 16px rgba(128, 0, 64, 0.12);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* 36 pétalos - rotaciones */
+        .p1  { transform: rotate(0deg); }   .p2  { transform: rotate(10deg); }  .p3  { transform: rotate(20deg); }
+        .p4  { transform: rotate(30deg); }  .p5  { transform: rotate(40deg); }  .p6  { transform: rotate(50deg); }
+        .p7  { transform: rotate(60deg); }  .p8  { transform: rotate(70deg); }  .p9  { transform: rotate(80deg); }
+        .p10 { transform: rotate(90deg); }  .p11 { transform: rotate(100deg); } .p12 { transform: rotate(110deg); }
+        .p13 { transform: rotate(120deg); } .p14 { transform: rotate(130deg); } .p15 { transform: rotate(140deg); }
+        .p16 { transform: rotate(150deg); } .p17 { transform: rotate(160deg); } .p18 { transform: rotate(170deg); }
+        .p19 { transform: rotate(180deg); } .p20 { transform: rotate(190deg); } .p21 { transform: rotate(200deg); }
+        .p22 { transform: rotate(210deg); } .p23 { transform: rotate(220deg); } .p24 { transform: rotate(230deg); }
+        .p25 { transform: rotate(240deg); } .p26 { transform: rotate(250deg); } .p27 { transform: rotate(260deg); }
+        .p28 { transform: rotate(270deg); } .p29 { transform: rotate(280deg); } .p30 { transform: rotate(290deg); }
+        .p31 { transform: rotate(300deg); } .p32 { transform: rotate(310deg); } .p33 { transform: rotate(320deg); }
+        .p34 { transform: rotate(330deg); } .p35 { transform: rotate(340deg); } .p36 { transform: rotate(350deg); }
+
+        /* Segunda capa (pétalos internos) */
+        .capa2 .petalo-inner {
+            width: 18px;
+            height: 92px;
+            background: linear-gradient(to top, #d43f85, #fc9dc6, #ffeef5);
+        }
+
+        /* Centro */
+        .centro {
+            position: absolute;
+            width: 78px;
+            height: 78px;
+            background: radial-gradient(circle, #a01050, #e03a7a, #ff99c8);
+            border-radius: 50%;
+            top: 91px;
+            left: 91px;
+            z-index: 10;
+            box-shadow: 0 0 28px rgba(200, 0, 100, 0.3);
+            transform: scale(0);
+            opacity: 0;
+        }
+
+        /* Tallo y hojas */
+        .tallo {
+            position: absolute;
+            width: 14px;
+            height: 270px;
+            background: linear-gradient(to bottom, var(--stem1), var(--stem2));
+            border-radius: 20px;
+            top: 240px;
+            left: 133px;
+            transform-origin: top;
+        }
+        .hoja {
+            position: absolute;
+            width: 88px;
+            height: 46px;
+            background: linear-gradient(130deg, #4caf50, #1b5e20);
+            border-radius: 90px 0 70px 20px;
+            transform-origin: left center;
+        }
+        .hoja1 { top: 340px; left: 60px; transform: rotate(-40deg); }
+        .hoja2 { top: 410px; left: 128px; transform: rotate(145deg); }
+
+        /* Animaciones */
+        @keyframes petalPop {
+            0% { transform: scale(0) translateY(12px); opacity: 0; }
+            70% { transform: scale(1.08) translateY(-3px); }
+            100% { transform: scale(1) translateY(0); opacity: 1; }
+        }
+        @keyframes centerGlow {
+            0% { transform: scale(0) rotate(-10deg); opacity: 0; }
+            80% { transform: scale(1.1); }
+            100% { transform: scale(1); opacity: 1; }
+        }
+        @keyframes swayGentle {
+            0% { transform: rotate(-2deg); }
+            50% { transform: rotate(2.2deg); }
+            100% { transform: rotate(-2deg); }
+        }
+
+        /* Flor abierta */
+        .flor.bloom .petalo-inner {
+            animation: petalPop 0.42s cubic-bezier(0.2, 0.9, 0.3, 1.2) forwards;
+        }
+        .flor.bloom .centro {
+            animation: centerGlow 0.48s cubic-bezier(0.2, 0.8, 0.4, 1.2) 0.5s forwards;
+        }
+
+        /* Movimiento de tallos */
+        .tallo, .hoja {
+            animation: swayGentle 3.8s ease-in-out infinite;
+        }
+
+        @media (max-width: 760px) {
+            .card { padding: 24px 20px; gap: 20px; }
+            .mensaje h1 { font-size: 1.6rem; }
+            .mensaje p { font-size: 0.95rem; }
+        }
+    </style>
+</head>
+<body>
+
+<div class="card">
+    <div class="mensaje">
+        <h1>✨ Para Luz, una niña muy linda ✨</h1>
+        <p>🌸 Holaa, me gustas muchísimo, eres una niña muy maravillosa y, aunque llevamos poquito tiempo conociéndonos, me gusta mucho poder descubrir cada día un poquito más de ti. Conocerte ha sido algo muy bonito, como encontrar un pequeño tesoro que no sabías que estabas buscando. Espero que podamos seguir conociéndonos, pasar muchos momentos bonitos juntos y que esto que estamos empezando dure mucho tiempo. Me gusta mucho tenerte en mi vida y espero que podamos compartir muchas cosas juntos. Te quiero mucho ❤️ <br>Muaaaack 🌷🌼</p>
+        <div class="botones">
+            <button class="btn btn-primary" id="btnCreate">🌸 Hacer florecer</button>
+            <button class="btn btn-secondary" id="btnReset">🍃 Cerrar pétalos</button>
+        </div>
+    </div>
+
+    <div class="jardin">
+        <div class="escena">
+            <div class="stem-layer" id="stemLayer"></div>
+            <div class="flower-layer" id="flowerLayer"></div>
+        </div>
+    </div>
+</div>
+
+<script>
+    (function() {
+        // ========== PLANTILLAS ==========
+        // Plantilla de flor con todos los pétalos (externa + capa2 + centro)
+        function crearFlorEstructura() {
+            const flor = document.createElement('div');
+            flor.className = 'flor';
+            
+            // 36 pétalos externos (rotación completa)
+            for (let i = 1; i <= 36; i++) {
+                const petalo = document.createElement('div');
+                petalo.className = `petalo p${i}`;
+                const inner = document.createElement('div');
+                inner.className = 'petalo-inner';
+                petalo.appendChild(inner);
+                flor.appendChild(petalo);
+            }
+            
+            // Capa interna (pétalos más cortos)
+            const capa2 = document.createElement('div');
+            capa2.className = 'capa2';
+            const indices = [1, 4, 7, 10, 13, 16, 19, 22, 25, 28, 31, 34];
+            indices.forEach(idx => {
+                const petInt = document.createElement('div');
+                petInt.className = `petalo p${idx}`;
+                const innerInt = document.createElement('div');
+                innerInt.className = 'petalo-inner';
+                petInt.appendChild(innerInt);
+                capa2.appendChild(petInt);
+            });
+            flor.appendChild(capa2);
+            
+            // Centro
+            const centro = document.createElement('div');
+            centro.className = 'centro';
+            flor.appendChild(centro);
+            
+            return flor;
+        }
+        
+        // Plantilla de tallo con hojas
+        function crearTalloEstructura() {
+            const wrapper = document.createElement('div');
+            wrapper.className = 'stem-wrap';
+            const tallo = document.createElement('div');
+            tallo.className = 'tallo';
+            const hoja1 = document.createElement('div');
+            hoja1.className = 'hoja hoja1';
+            const hoja2 = document.createElement('div');
+            hoja2.className = 'hoja hoja2';
+            wrapper.appendChild(tallo);
+            wrapper.appendChild(hoja1);
+            wrapper.appendChild(hoja2);
+            return wrapper;
+        }
+        
+        // Posiciones del ramo
+        const posiciones = [
+            'pos-center', 'pos-left', 'pos-right', 'pos-top', 'pos-top-left',
+            'pos-top-right', 'pos-mid-left', 'pos-mid-right', 'pos-bottom-left',
+            'pos-bottom-right', 'pos-top-center', 'pos-bottom-center'
+        ];
+        
+        const stemContainer = document.getElementById('stemLayer');
+        const flowerContainer = document.getElementById('flowerLayer');
+        
+        let todasLasFlores = [];     // array de elementos .flor
+        let todosLosWrappersFlor = [];
+        
+        // Construir ramo completo
+        function construirRamo() {
+            stemContainer.innerHTML = '';
+            flowerContainer.innerHTML = '';
+            todasLasFlores = [];
+            todosLosWrappersFlor = [];
+            
+            posiciones.forEach(pos => {
+                // Flor
+                const florWrapper = document.createElement('div');
+                florWrapper.className = `flor-wrap ${pos}`;
+                const flor = crearFlorEstructura();
+                florWrapper.appendChild(flor);
+                flowerContainer.appendChild(florWrapper);
+                
+                // Tallo
+                const talloWrapper = crearTalloEstructura();
+                talloWrapper.className = `stem-wrap ${pos}`;
+                stemContainer.appendChild(talloWrapper);
+                
+                todasLasFlores.push(flor);
+                todosLosWrappersFlor.push(florWrapper);
+            });
+        }
+        
+        // Cerrar todas las flores (reset)
+        function cerrarFlores() {
+            todasLasFlores.forEach(flor => {
+                flor.classList.remove('bloom');
+                const petalos = flor.querySelectorAll('.petalo-inner');
+                const centros = flor.querySelectorAll('.centro');
+                petalos.forEach(p => {
+                    p.style.animation = 'none';
+                    p.style.transform = 'scale(0)';
+                    p.style.opacity = '0';
+                });
+                centros.forEach(c => {
+                    c.style.animation = 'none';
+                    c.style.transform = 'scale(0)';
+                    c.style.opacity = '0';
+                });
+            });
+        }
+        
+        // Abrir flores con efecto escalonado y mágico
+        function abrirFlores() {
+            // primero reiniciar
+            cerrarFlores();
+            
+            // pequeño delay para limpiar el DOM
+            setTimeout(() => {
+                todasLasFlores.forEach((flor, idx) => {
+                    // Limpiar estilos inline nuevamente y forzar reflow
+                    const petalos = flor.querySelectorAll('.petalo-inner');
+                    const centros = flor.querySelectorAll('.centro');
+                    petalos.forEach(p => {
+                        p.style.animation = '';
+                        p.style.transform = '';
+                        p.style.opacity = '';
+                    });
+                    centros.forEach(c => {
+                        c.style.animation = '';
+                        c.style.transform = '';
+                        c.style.opacity = '';
+                    });
+                    
+                    // Agregar clase bloom con micro-stagger según posición
+                    setTimeout(() => {
+                        flor.classList.add('bloom');
+                    }, idx * 35); // cada flor abre con delay creando cascada
+                });
+            }, 20);
+        }
+        
+        // Eventos y arranque
+        function init() {
+            construirRamo();
+            
+            const btnCrear = document.getElementById('btnCreate');
+            const btnReset = document.getElementById('btnReset');
+            
+            btnCrear.addEventListener('click', () => {
+                abrirFlores();
+            });
+            
+            btnReset.addEventListener('click', () => {
+                cerrarFlores();
+            });
+            
+            // Animación de bienvenida: que florezcan al cargar
+            setTimeout(() => {
+                abrirFlores();
+            }, 400);
+        }
+        
+        if (document.readyState === 'loading') {
+            document.addEventListener('DOMContentLoaded', init);
+        } else {
+            init();
+        }
+    })();
+</script>
+</body>
+</html>
